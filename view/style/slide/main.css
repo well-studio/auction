@@ -1,0 +1,26 @@
+.ff-slider{
+  overflow: hidden;
+  position: relative;
+}
+
+.link-node{
+  display: inline-block;
+}
+.link-node>img{
+  width : 100%;
+}
+.tools{
+  background: white;
+  bottom: 0;
+  height: 20px;
+  width: 100px;
+  position: absolute;
+}
+.tools>div{
+  cursor:pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: gray;
+  border-radius: 50%;
+}
