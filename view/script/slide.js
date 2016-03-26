@@ -1,6 +1,4 @@
-define(function(){
-  
-  /**
+/**
    * @param {any,string,number,number} param type top bottom  
    * 
    * @return {boolean} 
@@ -123,8 +121,8 @@ define(function(){
         var pageSwitchTool = document.createElement('div');
         pageSwitchTool.className = "tools";
         var i,dot;
-
         for(i = 0;i < imgUrls.length;i++){
+
           dot = document.createElement('div');
           dot.title = i;
           dot.onclick = pageSwitch;
@@ -211,7 +209,3 @@ define(function(){
        
       }
   };
- 
-
-  return slider;
-});

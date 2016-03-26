@@ -18,7 +18,7 @@
     <!--需要返回的数据：-->
     <!--所有分类（包括分类id，分类名，分类图片-->
     <div class="category" ng-repeat="category in categories">
-      <a href="./auctionItems.php?gid={{category.id}}">
+      <a href="./auctionItems.php?cid={{category.id}}">
         <img src="{{category.img}}" alt="{{category.name}}">
         <span>{{category.name}}</span>
       </a>

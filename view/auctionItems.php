@@ -19,8 +19,8 @@
     <!--分类（包括分类名，请求的分类下当前页数的拍品（包括拍品id，图片地址，拍品名称））-->
     <h4>{{category.name}}</h4>
     <hr/>
-    <div ng-repeat="auction in category.auctions">
-      <a href="./detail.php?cid={{auction.id}}">
+    <div class="auction" ng-repeat="auction in category.auctions">
+      <a href="./detail.php?gid={{auction.id}}">
         <img src="{{auction.img.path1}}" alt="{{auction.name}}">
         <span>{{auction.name}}</span>
       </a>

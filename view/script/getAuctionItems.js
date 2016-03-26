@@ -40,6 +40,8 @@ app.controller('showAuctionItems', function($scope) {
       if(xhr.readyState == 4){
          if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
             var returnValue = JSON.parse(xhr.responseText);
+            curr = returnValue.currentPage;
+            total = returnValue.totalPages;
             $scope.$apply(function(){
               $scope.category = returnValue.category;
               $scope.currentPage = returnValue.currentPage;

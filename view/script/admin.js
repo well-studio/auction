@@ -48,6 +48,7 @@ function getData(){
     if(xhr.readyState === 4){
       if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
          items = JSON.parse(xhr.responseText);
+         var itemView = document.getElementById('itemView');
          var scope = angular.element(itemView).scope();
          scope.$apply(function(){
             scope.items = items;
