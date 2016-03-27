@@ -123,3 +123,17 @@ input[type=submit]:hover,input[type=button]:hover{
 tbody img{
   width: 5rem;
 }
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  text-align: center;
+}
+td, th{
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    padding: .5em 1em;
+    border-width:0 0 1px;
+    border-bottom: 1px solid #cbcbcb;
+}
