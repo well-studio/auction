@@ -55,10 +55,10 @@
     <h4>{{auctionItem.name}}</h4>
     <hr/>
     <div class="detail">
-      <div id = "ff-slider" style = "width:100%;height:8rem"></div>
-      <div>简介：<p>{{auctionItem.summary}}</p></div>
-      <div>捐赠人：<span>{{auctionItem.donor}}</span></div>
-      <div>拍品拟拍价：<span>{{auctionItem.price}}</span></div>
+      <div id = "ff-slider" style = "width:100%;height:14rem"></div>
+      <div><span>简介</span><p>{{auctionItem.summary}}</p></div>
+      <div><span>捐赠人</span><p>{{auctionItem.donor}}</p></div>
+      <div><span>拍品拟拍价</span><p>{{auctionItem.price}}</p></div>
       <div><input type="button" value="我要抢拍" id="order"></div>
     </div>
     <?php if(isset($errMsg)){ ?>
@@ -79,9 +79,11 @@
       <div class="user" ng-repeat="comment in comments">
         <div>
           <img src="{{comment.user.img}}" alt="{{comment.user.name}}">
-          <span class="uname">{{comment.user.name}}</span>
+          <div>
+            <span class="uname">{{comment.user.name}}</span>
+            <div class="comment">{{comment.content}}</div>
+          </div>  
         </div>
-        <div class="comment">{{comment.content}}</div>
       </div>
     </div>
     <div id="preOrder">
