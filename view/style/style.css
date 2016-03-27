@@ -1,5 +1,6 @@
 html{
   font-size: 16px;
+  font-family: 微软雅黑;
 }
 body{
   background-color:#f2f2f2;
@@ -13,22 +14,36 @@ nav{
   padding: 2px;
 }
 .logo{
-  width: 3rem;
+  width: 4rem;
   vertical-align: bottom;
 }
 .logo+div{
-  font-size: .8rem;
+  font-size: 1.2rem;
   display: inline-block;
   margin-bottom: 0.5rem;
 }
 .logo+div>span{
-  font-size: .6rem;
+  font-size: .85rem;
 }
 .content{
   margin: 0.35rem 0.55rem;
   padding: 0.5rem 0.3rem;
   background-color: #ffffff;
   border-radius: 3px;
+}
+.content>h4{
+  font-size: 1.35rem;
+  border-left: 3px solid red;
+  padding-left: .5rem;
+}
+.detail>div>span{
+  font-size: 1.15rem;
+  border-left: 2px solid red;
+  padding-left: .25rem;
+  font-weight: bold;
+}
+.detail>div>p{
+  text-indent: 0.35rem;
 }
 .category{
   border-top: 1px solid #CCC;
@@ -38,33 +53,50 @@ nav{
   overflow: hidden;
   display: block;
 }
+.category>a:hover{
+  background-color: #ccc;
+}
 .category img{
-  width: 3rem;
-  height: 2.5rem;
+  width: 15%;
+  height: 3rem;
   float: left;
-  border-radius: 50%;
 }
 .category span{
   float: left;
-  margin-top: 0.8rem;
+  color:#000;
+  margin-top: 0.9rem;
   text-align: center;
-  width: 65%;
+  width: 85%;
 }
 .auction {
   display: inline-block;
-  width: 6rem;
-  margin-left: .6rem;
+  width: 30%;
+  margin-left: 2.5%;
   overflow: hidden;
+  text-align: center;
+  box-shadow: 1px 1px 10px #cbcbcb;
+  margin-top: .5rem;
+}
+.auction>a{
+  color: white;
+  text-decoration: none;
+  font-family: 微软雅黑;
 }
 .auction img ,.auction span{
   width: 100%;
 }
 .auction img {
-  height: 5rem;
+  height: 8rem;
 }
 .auction span {
-    display: block;
-    text-align: center;
+  display: block;
+  text-align: center;
+  background-color: #D64937;
+  margin-top: -4px;
+  padding: .25rem;
+}
+.auction span:hover{
+  background-color: #E56454;
 }
 .pageTool{
   text-align: center;
@@ -93,6 +125,10 @@ input[type="button"]:hover,input[type="submit"]:hover{
 }
 #cPage{
   width: 1.5rem;
+  height: 1.2rem;
+  vertical-align: baseline;
+  padding: .15rem .15rem;
+  text-align: center;
 }
 .detail > img {
     width: 100%;
@@ -102,21 +138,27 @@ input[type="button"]:hover,input[type="submit"]:hover{
 }
 .user{
   overflow: hidden;
-  border-bottom: 1px dotted #c2c2c2;
+  padding: .5rem 0;
+  border-bottom: 2px dotted #6D6D6D;
+}
+
+.comment{
+  padding-left: 1rem;
+  color: #6D6D6D;
+  word-break: break-all;
 }
 .user>div{
-   float: left;
+  padding-left: 1rem;
 }
-.user>div:first-child{
-  width: 5rem;
-  text-align: center;
-}
-.comment{
-  max-width: 62%;
-  word-break: break-all;
+.uname{
+  padding-left: 1rem;
 }
 .user img{
   width: 3rem;
+  border-radius: 50%;
+}
+.user>div>*{
+  float: left;
 }
 #comm{
   width: 100%;
@@ -153,7 +195,7 @@ input[type=text],input[type=password],textarea{
   padding: .5rem .3rem;
   border-radius: 5px;
   width: 80%;
-  margin: 50% auto 0 auto; 
+  margin: 15% auto 0 auto; 
   background-color: #f2f2f2;
   position: relative;
 }
@@ -178,6 +220,6 @@ input[type=text],input[type=password],textarea{
 }
 #back>span{
   position: absolute;
-  left: 0.2rem;
+  left: 0.4rem;
   top: -.5rem;
 }
