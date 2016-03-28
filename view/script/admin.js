@@ -27,7 +27,6 @@ change.onclick = function(){
 function valiHash(hash){
 
   var hash = hash||location.hash;
-
   if(hash === '#itemView'){
     itemView.style.display = 'inherit';
     itemAdd.style.display = passAdmin.style.display = 'none';
@@ -47,7 +46,7 @@ function getData(){
   xhr.onreadystatechange = function(){
     if(xhr.readyState === 4){
       if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
-         items = JSON.parse(xhr.responseText);
+         items = JSON.parse(xhr.responseText); 
          var itemView = document.getElementById('itemView');
          var scope = angular.element(itemView).scope();
          scope.$apply(function(){
@@ -63,15 +62,14 @@ function getData(){
   xhr.send(null);
 }
 
-function deleteItem(){
-  var itemName = event.target.getAttribute('delname');
+function deleteItem(itemName){
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function(){
     if(xhr.readyState === 4){
       if(xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
          if(xhr.responseText === 'true'){
             console.info('已删除');
-            document.getElementById(itemName).style.display = 'none';
+            document.getElementById('itemName').style.display = 'none';
          }else{
             console.error('出错！未删除!');
          }
@@ -83,4 +81,15 @@ function deleteItem(){
   //这里的path需要设置！！
   xhr.open('delete','../f.php?f=deleteItem&name='+itemName,true);
   xhr.send(null);
+}
+function showBidder(){
+  var bidder = event.target.parentNode.parentNode.getElementsByTagName('table')[0];
+  var wrap = document.getElementById('wrap');
+  if(wrap.style.display==="none" && bidder.style.display==="none"){
+     wrap.style.display = bidder.style.display = ""; 
+  }
+  wrap.onclick = function(){
+    this.style.display = "none";
+    bidder.style.display = "none";
+  }
 }

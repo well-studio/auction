@@ -138,6 +138,7 @@ class database extends mysqli {
 				'status'       => $row[5],
 				'auction_info' => $row[6],
 				'imgUrl'       => $row[7],
+				'like_count'   => $row[8],
 			);
 		}
 		return $r;
@@ -252,6 +253,7 @@ class database extends mysqli {
 				'status'       => $row[5],
 				'auction_info' => $row[6],
 				'imgUrl'       => $row[7],
+				'like_count'   => $row[8],
 			);
 		}else{
 			return false;
@@ -383,14 +385,21 @@ class database extends mysqli {
 	*/
 	function checkUserPass($name,$pass){
 		global $cfg;
-		$stmt = $this->prepare('SELECT `uid` FROM `admin_info` WHERE `name` = ? AND `password` = ? LIMIT 1');
+		/*$stmt = $this->prepare('SELECT `uid` FROM `admin_info` WHERE `name` = ? AND `password` = ? LIMIT 1');
 		$stmt->bind_param('ss',$a,$b);
 		$a = $name; $b = md5($pass.$cfg['passSalt']);
 		$stmt->execute();
 		$stmt->bind_result($uid);
 		$stmt->fetch();
-		$stmt->close();
-		return $uid > 0 ? $uid : false;
+		$stmt->close();*/
+		$name = $this->real_escape_string($name);
+		$pass = md5($pass.$cfg['passSalt']);
+		$r = $this->query('SELECT `uid` FROM `admin_info` WHERE `name` = \''.$name.'\' AND `password` = \''.$pass.'\' LIMIT 1');
+		if($r && $row = $r->fetch_assoc()){
+			return intval($row['uid']);
+		}else{
+			return false;
+		}
 	}
 
 	/**
@@ -408,6 +417,15 @@ class database extends mysqli {
 		$r = $stmt->execute();
 		$stmt->close();
 		return $r;
+	}
+
+	function clickLike($gid){
+		$gid = intval($gid);
+		$stmt = $this->prepare('UPDATE `goods_info` SET `like_count` = `like_count` + 1 WHERE `id` = ?');
+		$stmt->bind_param('i',$a);
+		$a = $gid;
+		$stmt->execute();
+		var_dump($stmt);
 	}
 }
 ?>

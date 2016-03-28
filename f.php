@@ -3,19 +3,31 @@ header("Access-Control-Allow-Origin:*");
 require_once(__DIR__.'/class/database.class.php');
 require_once(__DIR__.'/functions/common.func.php');
 if($_GET['f'] === 'getAllItem'){
+	session_start();
+	if(!$_SESSION['admin']){
+		die('无权限');
+	}
 	$db = new database();
 	$r = $db->selectGoods(0,99999999);
-	// var_dump($r);
 	foreach ($r as $k => $v) {
 		$out['t_'.$k]['name'] = $v['name'];
 		$tArr = explode(',', $v['imgUrl']);
 		$out['t_'.$k]['img'] = $tArr[0];
 		$out['t_'.$k]['cate'] = $v['category'];
 		$out['t_'.$k]['donor'] = $v['donorInfo'];
+		$v['auction_info'] = json_decode($v['auction_info'],true);
+		$out['t_'.$k]['price'] = $v['auction_info'][0]['price'];
+		// var_dump($v['auction_info']);
+		unset($v['auction_info'][0]);
+		$out['t_'.$k]['auctionInfos'] = $v['auction_info'];
 		$out['t_'.$k]['summary'] = $v['description'];
 	}
 	echo json_encode($out);
 }else if($_GET['f'] === 'deleteItem'){
+	session_start();
+	if(!$_SESSION['admin']){
+		die('无权限');
+	}
 	$db = new database();
 	if($db->deleteGoodByName($_GET['name']))
 		echo 'true';
@@ -58,10 +70,11 @@ if($_GET['f'] === 'getAllItem'){
 	$commentsMeta = $db->selectComments($gid);
 	$acif = json_decode($auctionMeta['auction_info'],true);
 	$out['auctionItem'] = array(
-		'name'    => $auctionMeta['name'],
-		'summary' => $auctionMeta['description'],
-		'donor'   => $auctionMeta['donorInfo'],
-		'price'   => $acif[0]['price'],
+		'name'      => $auctionMeta['name'],
+		'summary'   => $auctionMeta['description'],
+		'donor'     => $auctionMeta['donorInfo'],
+		'price'     => $acif[0]['price'],
+		'likeCount' => $auctionMeta['like_count'],
 	);
 	usort($acif, 'cmp');
 	$out['auctionItem']['topPrice'] = $acif[0]['price'];
@@ -82,6 +95,9 @@ if($_GET['f'] === 'getAllItem'){
 	$myInfo = json_decode(getUserInfo($_COOKIE['auction_ssid']),true);
 	$out['myInfo'] = $myInfo;
 	echo json_encode($out);
+}else if($_GET['f'] === 'clickLike'){
+	$db = new database();
+	$db->clickLike($_GET['gid']);
 }
 
 function cmp($a,$b){

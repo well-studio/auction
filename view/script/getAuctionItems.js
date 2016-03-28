@@ -47,6 +47,13 @@ app.controller('showAuctionItems', function($scope) {
               $scope.currentPage = returnValue.currentPage;
               $scope.totalPages = returnValue.totalPages;
             });
+            var auctions = document.getElementById('ac').getElementsByTagName('div');
+            for(var i in auctions){
+              if(auctions[i].className.split(' ')[0] === "auction"){
+                var img = auctions[i].getElementsByTagName('img')[0];
+                img.style.height = img.clientWidth*9/16 + 'px';
+              }
+            }
          }else{
            console.error("请求失败：" + xhr.status);
          }

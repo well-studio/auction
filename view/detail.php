@@ -1,8 +1,5 @@
 <?php
   require_once(__DIR__.'/../functions/common.func.php');
-  var_dump($_COOKIE);
-  var_dump($_GET);
-  var_dump($_POST);
   if(isset($_POST['fun']) && $_POST['fun'] == 'comment'){
     $db = new database();
     if(!empty($_POST['comment'])){
@@ -37,8 +34,10 @@
 <head>
   <meta charset="UTF-8">
   <title>拍品详情</title>
+  <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="./style/style.css">
   <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
+  <link href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="./style/slide/main.css">
 </head>
 <body>
@@ -55,8 +54,8 @@
     <h4>{{auctionItem.name}}</h4>
     <hr/>
     <div class="detail">
-      <div id = "ff-slider" style = "width:100%;height:14rem"></div>
-      <div><span>简介</span><p>{{auctionItem.summary}}</p></div>
+      <div id="ff-slider" style="width:100%;height:14rem"></div>
+      <div><div class="likeBox" style="float:right;margin-right:0.5em"><span id="lkcnt">{{auctionItem.likeCount}}</span><i id="lk" class="fa fa-thumbs-o-up" style="margin-left:0.5em;font-size:1.5em;"></i></div><span>简介</span><p>{{auctionItem.summary}}</p></div>
       <div><span>捐赠人</span><p>{{auctionItem.donor}}</p></div>
       <div><span>拍品拟拍价</span><p>{{auctionItem.price}}</p></div>
       <div><input type="button" value="我要抢拍" id="order"></div>
@@ -82,7 +81,7 @@
           <div>
             <span class="uname">{{comment.user.name}}</span>
             <div class="comment">{{comment.content}}</div>
-          </div>  
+          </div>
         </div>
       </div>
     </div>
@@ -106,13 +105,61 @@
     var preOrder = document.getElementById('preOrder'),
         order = document.getElementById('order'),
         back = document.getElementById('back');
-
         order.onclick = function(){
-          preOrder.style.display = "inherit"
-        }
+          preOrder.style.display = "inherit";
+        };
         back.onclick = function(){
-          preOrder.style.display = "none" 
+          preOrder.style.display = "none";
+        };
+
+
+    (function(){
+      var lkbtn = document.getElementById('lk');
+      if(checkIsLiked()){
+        lkbtn.className = 'fa fa-thumbs-up';
+        lkbtn.style.color = '#E03D3D';
+      }else{
+        lkbtn.addEventListener('click',b,true);
+      }
+      function b(){
+        var lkcnt = document.getElementById('lkcnt');
+        lkcnt.innerHTML = parseInt(lkcnt.innerHTML) + 1;
+        lkbtn.className="fa fa-thumbs-up";
+        lkbtn.style.color = '#E03D3D';
+        lkbtn.removeEventListener('click',b,true);
+        var date = new Date();
+        date.setTime(date.getTime() + 365*24*3600*1000);
+        var gid = location.search.split('?').slice(-1).join('').split('=')[1];
+        var likedList = getLikedList();
+        if(likedList == ''){
+          likedList = '|'+gid+'|';
+        }else{
+          likedList += gid+'|';
         }
+        document.cookie = "likedList="+escape(likedList)+";expires="+date.toGMTString();
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+          if(xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 300 || xhr.status == 304){
+            console.log('点赞成功');
+          }
+        }
+        xhr.open('get','../f.php?f=clickLike&gid='+gid,true);
+        xhr.send();
+      }
+      function getLikedList(){
+        var arr;
+        reg = /(^| )likedList=([^;]*)(;|$)/;
+        if(arr=document.cookie.match(reg))
+          return unescape(arr[2]);
+        else
+          return '';
+      }
+      function checkIsLiked(){
+        var gid = location.search.split('?').slice(-1).join('').split('=')[1];
+        var exp = new RegExp('\\|'+gid+'\\|');
+        return exp.test(getLikedList());
+      }
+    })();
   </script>
   <script src="script/slide.js"></script>
   <script type="text/javascript" src="./script/getDetail.js"></script>

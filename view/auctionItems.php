@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1">
+  <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
   <title>拍品</title>
   <link rel="stylesheet" href="./style/style.css">
   <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
@@ -13,7 +13,7 @@
       <div>共青团湖南商学院委员会<span>——拍品展示平台</span></div>
     </nav>
   </header>
-  <div class="content" ng-app="category" ng-controller="showAuctionItems">
+  <div class="content" ng-app="category" ng-controller="showAuctionItems" id="ac">
     <!--需要返回的数据：-->
     <!--当前页数，总页数（拍品总数除以每页拍品数），-->
     <!--分类（包括分类名，请求的分类下当前页数的拍品（包括拍品id，图片地址，拍品名称））-->

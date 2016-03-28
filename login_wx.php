@@ -10,6 +10,7 @@ if(isset($_GET['code'])){
 	$userInfoMeta = file_get_contents('https://api.weixin.qq.com/sns/userinfo?access_token='.$r['access_token'].'&openid='.$r['openid'].'&lang=zh_CN');
 	$ssid = randomSalt();
 	setcookie('auction_ssid',$ssid,time()+60*60*24*365,'/');
+	$_COOKIE['auction_ssid'] = $ssid;
 	$db = new database();
 	$db->query('INSERT INTO `wx_user_info`(`user_info_meta`,`user_token_meta`,`session_id`) VALUES(\''.$userInfoMeta.'\',\''.$userTokenMeta.'\',\''.$ssid.'\')');
 }
@@ -31,7 +32,6 @@ if(isset($_COOKIE['auction_ssid']) && $_COOKIE['auction_ssid']){
 			}
 		}
 	}
-	// $r = checkUserAccess($_COOKIE['wx_user_access_token'],$_COOKIE['wx_user_openid']);
 }
 
 if(!isset($_GET['code']) && !$isLogin){
@@ -41,9 +41,8 @@ if(!isset($_GET['code']) && !$isLogin){
 }
 echo "登录成功！";
 if($isLogin && isset($_GET['linkTo'])){
-	header('Location: '.$_GET['linkTo']);
+	header('Location: '.urldecode($_GET['linkTo']));
 	die();
 }
-
 
 ?>

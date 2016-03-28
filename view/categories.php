@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1">
+  <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
   <title>拍品种类</title>
   <link rel="stylesheet" href="./style/style.css">
   <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
