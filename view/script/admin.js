@@ -86,7 +86,7 @@ function showBidder(){
   var bidder = event.target.parentNode.parentNode.getElementsByTagName('table')[0];
   var wrap = document.getElementById('wrap');
   if(wrap.style.display==="none" && bidder.style.display==="none"){
-     wrap.style.display = bidder.style.display = ""; 
+     wrap.style.display = bidder.style.display = "";
   }
   wrap.onclick = function(){
     this.style.display = "none";

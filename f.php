@@ -10,17 +10,17 @@ if($_GET['f'] === 'getAllItem'){
 	$db = new database();
 	$r = $db->selectGoods(0,99999999);
 	foreach ($r as $k => $v) {
-		$out['t_'.$k]['name'] = $v['name'];
+		$out['t_'.$k]['name'] = htmlspecialchars_decode($v['name']);
 		$tArr = explode(',', $v['imgUrl']);
 		$out['t_'.$k]['img'] = $tArr[0];
-		$out['t_'.$k]['cate'] = $v['category'];
-		$out['t_'.$k]['donor'] = $v['donorInfo'];
+		$out['t_'.$k]['cate'] = htmlspecialchars_decode($v['category']);
+		$out['t_'.$k]['donor'] = htmlspecialchars_decode($v['donorInfo']);
 		$v['auction_info'] = json_decode($v['auction_info'],true);
 		$out['t_'.$k]['price'] = $v['auction_info'][0]['price'];
 		// var_dump($v['auction_info']);
 		unset($v['auction_info'][0]);
 		$out['t_'.$k]['auctionInfos'] = $v['auction_info'];
-		$out['t_'.$k]['summary'] = $v['description'];
+		$out['t_'.$k]['summary'] = htmlspecialchars_decode($v['description']);
 	}
 	echo json_encode($out);
 }else if($_GET['f'] === 'deleteItem'){
@@ -43,7 +43,7 @@ if($_GET['f'] === 'getAllItem'){
 	$out['category']['name'] = $r[0]['category'];
 	$j = 0;
 	foreach ($r as $k => $v) {
-		$out['category']['auctions'][$j]['id'] = $v['id'];
+		$out['category']['auctions'][$j]['id'] = htmlspecialchars_decode($v['id']);
 		$t = explode(',',$v['imgurl']);
 		$i = 1;
 		foreach ($t as $kk => $vv) {
@@ -51,7 +51,7 @@ if($_GET['f'] === 'getAllItem'){
 			$img['path'.$i++] = $vv;
 		}
 		$out['category']['auctions'][$j]['img'] = $img;
-		$out['category']['auctions'][$j++]['name'] = $v['name'];
+		$out['category']['auctions'][$j++]['name'] = htmlspecialchars_decode($v['name']);
 	}
 	echo json_encode($out);
 }else if($_GET['f'] === 'getCategories'){
@@ -70,9 +70,9 @@ if($_GET['f'] === 'getAllItem'){
 	$commentsMeta = $db->selectComments($gid);
 	$acif = json_decode($auctionMeta['auction_info'],true);
 	$out['auctionItem'] = array(
-		'name'      => $auctionMeta['name'],
-		'summary'   => $auctionMeta['description'],
-		'donor'     => $auctionMeta['donorInfo'],
+		'name'      => htmlspecialchars_decode($auctionMeta['name']),
+		'summary'   => htmlspecialchars_decode($auctionMeta['description']),
+		'donor'     => htmlspecialchars_decode($auctionMeta['donorInfo']),
 		'price'     => $acif[0]['price'],
 		'likeCount' => $auctionMeta['like_count'],
 	);
@@ -87,9 +87,9 @@ if($_GET['f'] === 'getAllItem'){
 	$i = 0;
 	if(is_array($commentsMeta)){
 		foreach ($commentsMeta as $v) {
-			$out['comments'][$i]['user']['name'] = $v['name'];
-			$out['comments'][$i]['user']['img'] = $v['img'];
-			$out['comments'][$i++]['content'] = $v['content'];
+			$out['comments'][$i]['user']['name'] = htmlspecialchars_decode($v['name']);
+			$out['comments'][$i]['user']['img'] = htmlspecialchars_decode($v['img']);
+			$out['comments'][$i++]['content'] = htmlspecialchars_decode($v['content']);
 		}
 	}
 	$myInfo = json_decode(getUserInfo($_COOKIE['auction_ssid']),true);

@@ -3,7 +3,7 @@
   if(isset($_POST['fun']) && $_POST['fun'] == 'comment'){
     $db = new database();
     if(!empty($_POST['comment'])){
-      $db->insertComment($_GET['gid'], htmlentities($_POST['comment']));
+      $db->insertComment($_GET['gid'], htmlspecialchars($_POST['comment']));
     }else{
       $errMsg = '评论内容不能为空';
     }

@@ -12,11 +12,11 @@ require_once(__DIR__.'/../class/resizeimage.class.php');
 $flag = true;
 $out = '';
 if(isset($_POST['name']) && $_POST['name']){
-  $name = htmlentities($_POST['name']);
-  $cate = htmlentities($_POST['cate']);
-  $dono = htmlentities($_POST['donor']);
-  $pric = htmlentities($_POST['price']);
-  $summ = htmlentities($_POST['summary']);
+  $name = htmlspecialchars($_POST['name']);
+  $cate = htmlspecialchars($_POST['cate']);
+  $dono = htmlspecialchars($_POST['donor']);
+  $pric = htmlspecialchars($_POST['price']);
+  $summ = htmlspecialchars($_POST['summary']);
   $imgUrl = '';
   if(mb_strlen($name,'utf8')<7){
     $time = time();
@@ -24,8 +24,8 @@ if(isset($_POST['name']) && $_POST['name']){
       if($_FILES['img'.$i]['error']) continue;
       if(!preg_match('/jpg|png|gif/', $_FILES['img'.$i]['name'], $r)) {
         $flag = false;
-         $out = '图片'.$_FILES['img'.$i]['name'].'格式不正确';
-        continue;
+        $out = '图片'.$_FILES['img'.$i]['name'].'格式不正确';
+        break;
       }
       $url = 'image/auction/'.$time.'_'.$i.'.'.$r[0];
       $thumbUrl = 'image/auction/thumb/'.$time.'_'.$i.'.'.$r[0];
@@ -105,7 +105,7 @@ if(isset($_POST['oldPass'])){
       <div id="itemAdd">
         <h4>添加拍品</h4>
         <hr>
-        <form  action="" method="post">
+        <form  action="" method="post" enctype="multipart/form-data">
           <fieldset class="formField">
             <label for="name">&emsp;名称：</label><input type="text" name="name" value="<?php if(isset($name)) echo $name ?>"><br/>
             <label for="cate">&emsp;类别：</label><input type="text" name="cate" value="<?php if(isset($cate)) echo $cate ?>"><br/>
@@ -117,6 +117,7 @@ if(isset($_POST['oldPass'])){
             <label for="img2">&emsp;图片2：</label><input name="img2" type="file">
             <label for="img3">&emsp;图片3：</label><input name="img3" type="file">
             <hr>
+            <span><?php if(isset($out)) echo $out ?></span>
             <input type="submit" value="添加">
           </fieldset>
         </form>
