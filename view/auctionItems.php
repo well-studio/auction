@@ -3,7 +3,7 @@
 <head>
   <meta name="viewport" charset="utf-8" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
   <title>拍品</title>
-  <link rel="stylesheet" href="./style/style.css">
+  <link rel="stylesheet" href="./style/style.css<?php echo '?t='.time(); ?>">
   <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script>
 </head>
 <body>
@@ -14,9 +14,6 @@
     </nav>
   </header>
   <div class="content" ng-app="category" ng-controller="showAuctionItems" id="ac">
-    <!--需要返回的数据：-->
-    <!--当前页数，总页数（拍品总数除以每页拍品数），-->
-    <!--分类（包括分类名，请求的分类下当前页数的拍品（包括拍品id，图片地址，拍品名称））-->
     <h4>{{category.name}}</h4>
     <hr/>
     <div class="auction" ng-repeat="auction in category.auctions">
@@ -33,6 +30,6 @@
       </div>
       <input id="next" type="button" value="下一页">
     </div>
-    <script src="./script/getAuctionItems.js"></script>
+    <script src="./script/getAuctionItems.js<?php echo '?t='.time(); ?>"></script>
 </body>
 </html>

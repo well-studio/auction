@@ -37,9 +37,9 @@ if($_GET['f'] === 'getAllItem'){
 	$r = $db->query('SELECT count(*) FROM `goods_info` WHERE `category` = (SELECT `name` FROM `goods_categories_info` WHERE `cateid` = '.$cateId.')');
 	$t = $r->fetch_array();
 	$count = $t[0];
-	$out['totalPages'] = ceil($count/9);
+	$out['totalPages'] = ceil($count/12);
 	$out['currentPage'] = intval($_GET['currentPage']);
-	$r = $db->selectGoodsByCategoryId($_GET['categoryId'],($out['currentPage']-1)*9,9);
+	$r = $db->selectGoodsByCategoryId($_GET['categoryId'],($out['currentPage']-1)*12,12);
 	$out['category']['name'] = $r[0]['category'];
 	$j = 0;
 	foreach ($r as $k => $v) {

@@ -116,7 +116,6 @@ input[type="button"]:hover,input[type="submit"]:hover{
   background-color: #33aaaa;
 }
 .detail input[type="button"]{
-  
   background-color: #E03D3D;
 }
 .detail input[type="button"]:hover{
@@ -128,7 +127,8 @@ input[type="button"]:hover,input[type="submit"]:hover{
 #cPage{
   width: 1.5rem;
   height: 1.2rem;
-  vertical-align: baseline;
+  vertical-align: text-bottom;
+  margin-bottom: 0px;
   padding: .15rem .15rem;
   text-align: center;
 }
