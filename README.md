@@ -1,2 +1,10 @@
 * 冗余的东西有点多。。将就一下吧
 * 导入cfg目录下面的wx_charitysale.sql到数据库，然后删掉
+* 请设置以下目录为777权限
+    * view/image/auction
+    * view/image/auction/thumb
+    * view/content
+    * view/content/img
+* 请设置以下文件为644权限或更高
+    * view/content/title
+    * view/content/content

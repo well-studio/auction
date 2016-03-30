@@ -1,5 +1,6 @@
 <?php
   require_once(__DIR__.'/../functions/common.func.php');
+  wxUserPage();
   if(isset($_POST['fun']) && $_POST['fun'] == 'comment'){
     $db = new database();
     if(!empty($_POST['comment'])){
@@ -10,12 +11,12 @@
   }
   if(isset($_POST['fun']) && $_POST['fun'] == 'auction'){
     if(preg_match('/^1[34578]\d{9}$/', $_POST['phoneNumber'])){
-      if(preg_match('/^\d+(\.?\d+)?$/', $_POST['myPrice'])){
+      if(preg_match('/^\d+$/', $_POST['myPrice'])){
         if(!empty($_POST['name'])){
           $maxInfo = getMaxPriceInfo($_GET['gid']);
-          if($_POST['myPrice'] > $maxInfo['price']){
+          if(intval($_POST['myPrice']) > $maxInfo['price']){
             $db = new database();
-            $db->insertAuctionPrice($_POST['myPrice'], $_POST['name'], $_POST['phoneNumber'], $_GET['gid']);
+            $db->insertAuctionPrice(intval($_POST['myPrice']), $_POST['name'], $_POST['phoneNumber'], $_GET['gid']);
           }else{
             $errMsg = '不能低于或等于最大竞拍价';
           }
@@ -58,6 +59,7 @@
       <div><div class="likeBox" style="float:right;margin-right:0.5em"><span id="lkcnt">{{auctionItem.likeCount}}</span><i id="lk" class="fa fa-thumbs-o-up" style="margin-left:0.5em;font-size:1.5em;"></i></div><span>简介</span><p>{{auctionItem.summary}}</p></div>
       <div><span>捐赠人</span><p>{{auctionItem.donor}}</p></div>
       <div><span>拍品拟拍价</span><p>{{auctionItem.price}}</p></div>
+      <div><span>拍品最高价</span><p>{{auctionItem.topPrice}}</p></div>
       <div><input type="button" value="我要抢拍" id="order"></div>
     </div>
     <?php if(isset($errMsg)){ ?>

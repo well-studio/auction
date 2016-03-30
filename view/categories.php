@@ -1,3 +1,7 @@
+<?php
+  require_once(__DIR__.'/../functions/common.func.php');
+  wxUserPage();
+?>
 <!doctype html>
 <html lang="en">
 <head>

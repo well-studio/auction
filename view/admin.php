@@ -73,6 +73,26 @@ if(isset($_POST['oldPass'])){
     $out = '旧密码错误！';
   }
 }
+if(isset($_POST['title'])){
+  $flag = true;
+  for($i=1;$i<4;$i++){
+    if($_FILES['img'.$i]['error']) continue;
+    if(!preg_match('/jpg|png|gif/', $_FILES['img'.$i]['name'], $r)) {
+      $flag = false;
+      $out = '图片'.$_FILES['img'.$i]['name'].'格式不正确';
+      break;
+    }
+    $url = 'content/img/index_'.$i.'.'.$r[0];
+    file_put_contents($url, file_get_contents($_FILES['img'.$i]['tmp_name']));
+  }
+  if($flag){
+    file_put_contents('content/title', $_POST['title']);
+    file_put_contents('content/content', $_POST['summary']);
+    $out = '修改成功';
+  }else{
+    $out .= ',修改失败';
+  }
+}
 ?><!doctype html>
 <html lang="en">
 <head>
@@ -91,6 +111,7 @@ if(isset($_POST['oldPass'])){
   <div class="content">
     <div class="sidebar">
       <ul class="mal">
+        <li><a id="idx" href="#idxAdmin">首页管理</a></li>
         <li>拍品管理</li>
         <li>
           <ul >
@@ -101,7 +122,24 @@ if(isset($_POST['oldPass'])){
         <li><a id="change" href="#passAdmin">设置管理密码</a></li>
       </ul>
     </div>
-    <div class="admin" >
+    <div class="admin">
+      <div id="idxAdmin">
+        <h4>首页管理</h4>
+        <hr>
+        <form  action="" method="post" enctype="multipart/form-data">
+          <fieldset class="formField">
+            <label for="title">&emsp;标题：</label><input type="text" name="title" value="<?php echo file_get_contents('content/title') ?>"><br/>
+            <label for="summary">&emsp;内容：</label>
+            <textarea name="summary" id="summary_index"><?php echo file_get_contents('content/content') ?></textarea><br/>
+            <label for="img1">&emsp;图片1：</label><input name="img1" type="file">
+            <label for="img2">&emsp;图片2：</label><input name="img2" type="file">
+            <label for="img3">&emsp;图片3：</label><input name="img3" type="file">
+            <hr>
+            <span><?php if(isset($out)) echo $out ?></span>
+            <input type="submit" value="确定">
+          </fieldset>
+        </form>
+      </div>
       <div id="itemAdd">
         <h4>添加拍品</h4>
         <hr>
@@ -148,7 +186,7 @@ if(isset($_POST['oldPass'])){
               <td>{{item.price}}</td><!--改动的地方-->
               <td><input type="button" value="竟拍人" onclick = "showBidder()"></a></td>
               <!--改动的地方-->
-              <td><input type="button" value="删除" onclick = "deleteItem({{item.name}})"></td>
+              <td><input type="button" value="删除" delname="{{item.name}}" onclick = "deleteItem()"></td>
               <!--改动的地方-->
               <td>
                   <table class="bidders" style="display:none">

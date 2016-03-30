@@ -72,11 +72,12 @@ class database extends mysqli {
 	*/
 	function deleteGoodByName($name){
 		$name = $this->real_escape_string($name);
-		$k = $this->query('SELECT count(*) FROM `goods_info` WHERE `category` = (SELECT `category` FROM `goods_info` WHERE `name` = \''.$name.'\' LIMIT 1)');
+		$k = $this->query('SELECT count(*),`id` FROM `goods_info` WHERE `category` = (SELECT `category` FROM `goods_info` WHERE `name` = \''.$name.'\' LIMIT 1)');
 		if($row = $k->fetch_array()){
 			if($row[0] == 1){
 				$this->query('DELETE FROM `goods_categories_info` WHERE `name` = (SELECT `category` FROM `goods_info` WHERE `name` = \''.$name.'\' LIMIT 1)');
 			}
+			$this->query('DELETE FROM `goods_comments` WHERE `gid` = '.$row[1]);
 		}
 		$r = $this->query('SELECT `imgurl` FROM `goods_info` WHERE `name` = \''.$name.'\'');
 		$rt = $r->fetch_assoc();
